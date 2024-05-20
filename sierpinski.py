@@ -14,25 +14,27 @@ def sierpinski(ax, v, d): # 시에르핀스키 삼각형 생성 함수 매개변
 
 
 def main(n): # 매인 함수
-    fig, ax = plt.subplots() # 그래프 (그림)과 축 오브젝트 생성
+    fig, ax = plt.subplots(figsize = (5 + n/2, 5 + n/2)) # 그래프 (그림)과 축 오브젝트 생성. n의 값에 비례하여 그림의 크기 증가
     ax.set_aspect('equal') # x, y 양 축의 길이를 같게 설정
     ax.axis('off') # 축을 안보이게 숨기기
 
     fv = np.array([[0, 0], [1, 0], [0.5, np.sqrt(3)/2]]) # 초기 정삼각형 세 꼭짓점 좌표 리스트
     
     sierpinski(ax, fv, n) # 시에르핀스키 삼각형 생성 함수 실행
-
+    
     # n의 값을 결과에 함께 출력하기 위한 코드
     ax.text(0.05, 0.95, # 텍스트 x좌표(0~1) = 0.05, y좌표(0~1) = 0.95 (좌측 상단)
-            f'n = {n}', # 보여질 텍스트 = 'n = 'n  (' '안에 들어있는 값은 문자열, 밖에 있는 n은 삼각형 변환 횟수 변수)
-            horizontalalignment='left', # 텍스트 좌우정렬 = 좌측 정렬
-            verticalalignment='top', #텍스트 상하정렬 = 상측 정렬
-            fontsize=22, # 텍스트 크기 = 22
-            transform=ax.transAxes) # 좌표계 지정 = 기존에 생성한 축 좌표계
+                f'n = {n}', # 보여질 텍스트 = 'n = 'n  (' '안에 들어있는 값은 문자열, 밖에 있는 n은 삼각형 변환 횟수 변수)
+                horizontalalignment='left', # 텍스트 좌우정렬 = 좌측 정렬
+                verticalalignment='top', #텍스트 상하정렬 = 상측 정렬
+                fontsize=22, # 텍스트 크기 = 22
+                transform=ax.transAxes) # 좌표계 지정 = 기존에 생성한 축 좌표계
     
+    plt.savefig(f'sierpinski_{n}.png', dpi = 250 + 12 * n*n)  # 생성된 결과물을 이름 = 'sierpinski_n.png', 화질(dpi) = 200 (+ n의 값에 비례하여 증가)으로 저장
     plt.show() # 생성된 시에르핀스키 삼각형 출력
 
 
 if __name__== "__main__": # 프로그램 시작시
-    n = 3  # 삼각형 변환 횟수
-    main(n) # 매인함수 실행
+    for i in range(1, 11): # n을 1~10 까지 반복문을 통하여 지정, 반복
+        n = i  # 삼각형 변환 횟수
+        main(n) # 매인함수 실행
